@@ -25,6 +25,16 @@ namespace untou3
 
    using GRP_type = std::array<int16_t, L + 1>;  // type for representation of Gelfand pattern
 
+   GRP_type add_grp(const GRP_type& a, const GRP_type& b)
+   {
+      GRP_type res;
+
+      for (int k = 0; k <= L; k++)
+         res[k] = a[k] + b[k];
+
+      return res;
+   }
+
    GRP_type bin_to_grp(uint64_t n)
    {
       GRP_type res;
