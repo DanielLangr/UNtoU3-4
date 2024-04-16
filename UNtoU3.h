@@ -10,10 +10,13 @@
 
 #ifndef MAXIMUM_UN_LABEL
 #define MAXIMUM_UN_LABEL 4
+#endif
 
 #include <array>
 #include <cstdint>
 #include <span>
+#include <string>
+#include <sstream>
 #include <vector>
 
 namespace untou3
@@ -22,6 +25,39 @@ namespace untou3
 
    using GRP_type = std::array<int16_t, L + 1>;  // type for representation of Gelfand pattern
 
+   GRP_type bin_to_grp(uint64_t n)
+   {
+      GRP_type res;
+
+      for (int k = 0; k <= L; k++)
+         res[L - k] = (n >> k) & 0x01;
+
+      return res;
+   }
+
+   uint64_t grp_to_bin(const GRP_type& grp)
+   {
+      uint64_t res = 0;
+
+      for (int k = 0; k <= L; k++)
+         if (grp[L - k] != 0)
+            res |= 1UL << k;
+
+      return res;
+   }
+
+   std::string grp_to_string(const GRP_type& grp)
+   {
+      std::stringstream s;
+
+      s << "[";
+      for (int i = 0; i < L; i++)
+         s << grp[i] << ", ";
+      s << grp[L] << "]";
+
+      return s.str();
+   }
+
    class Diffs {
       public:
          Diffs()
@@ -29,7 +65,7 @@ namespace untou3
             generate();
          }
 
-         std::span<GRP_Type> get_bin(uint64_t bin)
+         std::span<GRP_type> get_bin(uint64_t bin)
          {
             auto first = indexes_[bin];
             auto count = counts_[bin];
@@ -40,14 +76,14 @@ namespace untou3
                return { differences_.data() + first, count };
          }
 
-         std::span<GRP_Type> get_grp(const GRP_Type& grp)
+         std::span<GRP_type> get_grp(const GRP_type& grp)
          {
-            auto bin = grp_to_bin(in);
+            auto bin = grp_to_bin(grp);
             return get_bin(bin);
          }
 
       private:
-         void generate_rules_recursive(const uint64_t bin, const T& grp, T diff, int first)
+         void generate_rules_recursive(const uint64_t bin, const GRP_type& grp, GRP_type diff, int first)
          {
             // find second nonzero:
             int second = first + 1;
@@ -75,7 +111,7 @@ namespace untou3
          {
             auto grp = bin_to_grp(bin);
 
-            GRP_Type diff;
+            GRP_type diff;
             for (int k = 0; k < L + 1; k++)
                diff[k] = grp[k] ? -1 : 0;
 
@@ -127,27 +163,6 @@ namespace untou3
 
             for (uint64_t bin = 0; bin < max; bin++)
                generate_rules(bin);
-         }
-
-         GRP_Type bin_to_grp(uint64_t n)
-         {
-            GRP_Type res;
-
-            for (int k = 0; k <= L; k++)
-               res[L - k] = (n >> k) & 0x01;
-
-            return res;
-         }
-
-         uint64_t grp_to_bin(const GRP_Type& grp)
-         {
-            uint64_t res = 0;
-
-            for (int k = 0; k <= L; k++)
-               if (grp[L - k] != 0)
-                  res |= 1UL << k;
-
-            return res;
          }
 
          std::vector<GRP_type> differences_;  // differences data
