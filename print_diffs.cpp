@@ -15,8 +15,11 @@ int main()
       auto span = diffs.get_bin(bin);
       std::cout << "   count = " << span.size() << std::endl;
 
-      for (const auto& grp : span)
-         std::cout << "   " << untou3::grp_to_string(grp) << std::endl;
+      for (const auto& e : span)
+         std::cout << "   "
+            << untou3::grp_to_string(e.first)
+            << " (weight = " << e.second << ")"
+            << std::endl;
 
       std::cout << std::endl;
    }

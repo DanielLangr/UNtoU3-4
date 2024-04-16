@@ -16,8 +16,8 @@ void process_grp(const untou3::GRP_type& grp)
       return;
    }
 
-   for (const auto& diff : span) {
-      auto res = untou3::add_grp(grp, diff);
+   for (const auto& e : span) {
+      auto res = untou3::add_grp(grp, e.first);
       process_grp(res);
    }
 }

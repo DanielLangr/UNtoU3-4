@@ -12,8 +12,10 @@ int main()
    untou3::Diffs diffs;
    auto span = diffs.get_grp(grp);
 
-   for (const auto& diff : span) {
-      auto res = untou3::add_grp(grp, diff);
-      std::cout << "   " << untou3::grp_to_string(res) << std::endl;
+   for (const auto& e : span) {
+      auto res = untou3::add_grp(grp, e.first);
+      std::cout << "   " << untou3::grp_to_string(res)
+         << " (weight = " << e.second << ")"
+         << std::endl;
    }
 }
