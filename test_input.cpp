@@ -29,6 +29,10 @@
 #include <stdexcept>
 #include <vector>
 
+#ifdef MEASURE_TIME
+#include <chrono>
+#endif
+
 #ifdef HAVE_BOOST
 #include <boost/rational.hpp>
 #endif
@@ -70,7 +74,9 @@ int main() {
 
 #ifdef HAVE_BOOST
    // analytical calculation of dim([f])
-   std::vector<unsigned long> f(n2, 2);
+   std::vector<unsigned long> f(n4, 4);
+   std::fill_n(std::back_inserter(f), n3, 3);
+   std::fill_n(std::back_inserter(f), n2, 2);
    std::fill_n(std::back_inserter(f), n1, 1);
    std::fill_n(std::back_inserter(f), n0, 0);
    std::cout << "U(N) irrep dim = " << dim(f) << std::endl;
@@ -79,8 +85,21 @@ int main() {
    untou3::UNtoU3 gen;
    // generate HO vectors for a given n
    gen.generateXYZ(n);
+
+#ifdef MEASURE_TIME
+   auto start = std::chrono::high_resolution_clock::now();
+#endif
+
    // generation of U(3) irreps in the input U(N) irrep [f]
    gen.generateU3Weights({ n4, n3, n2, n1, n0 }, (n + 1) * (n + 2) / 2 );
+
+#ifdef MEASURE_TIME
+   auto end = std::chrono::high_resolution_clock::now();
+   std::cout << "U3 weights generation time: "
+      << std::chrono::duration<double>(end - start).count()
+      << " [s]" << std::endl;
+#endif
+
    // calculated sum
    unsigned long sum = 0;
    // iteration over generated U(3) weights
