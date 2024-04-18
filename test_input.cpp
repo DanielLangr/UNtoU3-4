@@ -62,10 +62,10 @@ int main() {
    // HO level 
    unsigned long n;
    // specification of intput U(N) irrep
-   unsigned int n2, n1, n0;
-   std::cin >> n >> n2 >> n1 >> n0;
+   unsigned int n4, n3, n2, n1, n0;
+   std::cin >> n >> n4 >> n3 >> n2 >> n1 >> n0;
 
-   if (n2 + n1 + n0 != (n + 1) * (n + 2) / 2)
+   if (n4 + n3 + n2 + n1 + n0 != (n + 1) * (n + 2) / 2)
       throw std::invalid_argument("Arguments mismatch!");
 
 #ifdef HAVE_BOOST
@@ -80,7 +80,7 @@ int main() {
    // generate HO vectors for a given n
    gen.generateXYZ(n);
    // generation of U(3) irreps in the input U(N) irrep [f]
-   gen.generateU3Weights({ n2, n1, n0 }, (n + 1) * (n + 2) / 2 );
+   gen.generateU3Weights({ n4, n3, n2, n1, n0 }, (n + 1) * (n + 2) / 2 );
    // calculated sum
    unsigned long sum = 0;
    // iteration over generated U(3) weights
