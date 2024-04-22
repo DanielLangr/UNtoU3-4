@@ -1,17 +1,13 @@
-// test_141.cpp - a test driver for UNtoU3 class.
+// test_10401.cpp - a test driver for untou3::UNtoU3 class.
 // 
 // License: BSD 2-Clause (https://opensource.org/licenses/BSD-2-Clause)
 //
 // Copyright (c) 2024, Daniel Langr
 // All rights reserved.
 //
-// Program implements the U(N) to U(3) reduction where n=2 (N=6) for the input irrep [2,1,1,1,1,0],
-// which is represented by a number of twos n2=1, number of ones n1=4, and number of zeros n0=1.
-// After reduction, the program iterates over generated U(3) weights and print level dimensionalities
-// of those that represent U(3) irreps.
-// 
-// The output should consist of 2 U(3) irreps having labels [5,4,3] and [6,4,2],
-// both having level dimensionality 1.
+// Program implements the U(N) to U(3) reduction where n=2 (N=6) for the input irrep [4,2,2,2,2,0],
+// which is represented by R = [1,0,4,0,1]. After the reduction, the program iterates over
+// generated U(3) weights and print level dimensionalities of those that represent U(3) irreps.
 
 #include <iostream>
 #include "UNtoU3.h"

@@ -1,4 +1,6 @@
-// UNtoU3.h - a header file that implements the algorithm for reduction of an U(N) irreducible representation (irrep) into U(3) irreps.
+// UNtoU3.h - a header file that implements the algorithm for the reduction
+// of an U(N) irreducible representation (irrep) with highest label L=4
+// into U(3) irreps.
 // 
 // License: BSD 2-Clause (https://opensource.org/licenses/BSD-2-Clause)
 //
