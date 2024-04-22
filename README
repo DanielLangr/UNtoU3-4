@@ -6,6 +6,6 @@ test_10401.cpp - test source file for U(6) irrep [4,2,2,2,2,0].
 
 test_input.cpp - benchmark source file that takes eta, r4, r3, r2, r1, and r0 as user inputs and optionaly (with BOOST) verify level dimensionalities or generated U3 irreps.
 
-Makefile - build configuration for automake tool. 
+Makefile - build configuration for make tool. 
 
 For building test programs, run make. Configuration of the build process (compiler, flags, optional BOOST path) is specified in the Makefile file.
